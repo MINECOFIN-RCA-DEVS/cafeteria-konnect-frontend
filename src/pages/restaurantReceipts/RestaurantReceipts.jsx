@@ -17,7 +17,7 @@ function RestaurantReceipts(props) {
       id: 2,
       name: 'Jane Smith',
       role: 'Consultant',
-      department: 'Budget'
+      department: 'Budget',
     },
     {
       id: 3,
@@ -151,7 +151,7 @@ function RestaurantReceipts(props) {
   return (
     <div>
       <div>
-        <div className="flex flex-col md:flex-row gap-3 md:gap-0 md:items-center mb-3">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-0 lg:w-[60vw] w-full md:justify-between md:items-center mb-3">
           <div className="md:w-1/3 text-lg text-gray-500 font-semibold">
             <span className="text-sm mr-4">Select month: </span>
             <div className="border-[1px] px-4 py-2 w-max">
@@ -174,6 +174,10 @@ function RestaurantReceipts(props) {
           <h2 className="flex items-center text-mainGray text-3xl px-8 py-4 font-semibold border-[1px] border-gray-200 w-max">
             <span className="text-lg mr-4">Total receipts: </span>
             {receiptsToDisplay.length}
+          </h2>
+          <h2 className="flex items-center text-mainGray text-3xl px-4 py-4 font-semibold border-[1px] border-gray-200 w-max">
+            <span className="text-sm mr-4">Total attendence: </span>
+            7890
           </h2>
         </div>
       </div>
