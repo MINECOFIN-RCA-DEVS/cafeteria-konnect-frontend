@@ -354,17 +354,18 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                       Names
                     </label>
                     <div className='flex md:flex-row flex-col gap-3'>
-                    <Field
+                    <input
                       name="names"
                       type="text"
                       placeholder="First name"
-                      className="w-full text-xs border border-[8F8F8F] px-2 py-3 "
+                      className="w-full text-xs border focus:border-gray-300 focus:outline-none  px-2 py-3 "
+                      
                     />
                     <Field
                       name="names"
                       type="text"
                       placeholder="Last name"
-                      className="w-full text-xs border border-[8F8F8F] px-2 py-3 "
+                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
                     />
                     </div>
                     </div> 
@@ -380,7 +381,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                       name="email"
                       type="email"
                       placeholder="Email address"
-                      className="w-full text-xs border border-[8F8F8F] px-2 py-3 "
+                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
                     />
                     </div>
                     
@@ -396,7 +397,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                       as="select"
                       id="role"
                       name="role"
-                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-600"
+                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border border focus:border-gray-300 focus:outline-none rounded shadow-sm  "
                     >
                       {options.map((option) => (
                         <option key={option.role} value={option.role}>
@@ -417,7 +418,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                       as="select"
                       id="role"
                       name="role"
-                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-600"
+                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border rounded shadow-sm focus:outline-none"
                     >
                       {options.map((option) => (
                         <option key={option.role} value={option.role}>
@@ -438,7 +439,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                       name="email"
                       type="email"
                       placeholder="Enter your National Id"
-                      className="w-full text-xs border border-[8F8F8F] px-2 py-3 "
+                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
                     />
                     </div>
 
