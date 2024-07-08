@@ -518,7 +518,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
                 {src === '' ? (
                   "Don't have Qr code yet"
                 ) : (
-                  <img className="h-[70%] w-[50%] text-mainBlue" src={src} />
+                  <img className="h-[90%] w-[70%] text-mainBlue" src={src} />
                 )}
               </div>
               <div className="my-2 flex w-[80%] md:w-[60%] flex-col md:flex-row items-start md:items-center md:justify-between gap-4 md:gap-8 mx-auto">

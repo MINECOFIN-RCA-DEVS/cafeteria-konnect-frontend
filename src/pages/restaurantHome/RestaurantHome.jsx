@@ -144,8 +144,9 @@ function RestaurantHome(props) {
       </div>
 
       <div className="flex flex-col gap-3">
-        <h1 className="font-semibold text-mainGray">
-          People who attended today
+        <h1 className="font-medium text-gray-500">
+          People who attended at:
+          <span className="font-light text-blue-400 ml-4">{selectedDate}</span>
         </h1>
 
         {addNewAttendee && (
@@ -175,17 +176,19 @@ function RestaurantHome(props) {
                   </form>
                   <h2 className="text-gray-500">Matching results</h2>
                   <ul className="w-full mt-2 h-[30vh] border-2 border-gray-200 overflow-y-auto px-2 py-4 rounded-md">
-                    {filteredEmails.length > 0
-                      ? filteredEmails.map((attendence) => (
-                          <div
-                            className="w-full flex items-center justify-between border-[1px] border-gray-200 my-2 p-2"
-                            key={attendence.id}
-                          >
-                            <li className="text-sm">{attendence.email}</li>
-                            <AddAttendeeManually email={attendence.email} />
-                          </div>
-                        ))
-                      :  <span>No match found</span>}
+                    {filteredEmails.length > 0 ? (
+                      filteredEmails.map((attendence) => (
+                        <div
+                          className="w-full flex items-center justify-between border-[1px] border-gray-200 my-2 p-2"
+                          key={attendence.id}
+                        >
+                          <li className="text-sm">{attendence.email}</li>
+                          <AddAttendeeManually email={attendence.email} />
+                        </div>
+                      ))
+                    ) : (
+                      <span>No match found</span>
+                    )}
                   </ul>
                 </div>
 

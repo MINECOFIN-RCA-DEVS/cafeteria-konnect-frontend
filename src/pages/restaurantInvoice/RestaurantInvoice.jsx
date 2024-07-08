@@ -153,12 +153,7 @@ function RestaurantInvoice(props) {
 
   const invoiceHeaders = ['Receipt Id', 'Date', 'Number of attendees'];
 
-  const headers = [
-    'Invoice Id',
-    'Month',
-    'Number of Receipts',
-    'Actions',
-  ];
+  const headers = ['Invoice Id', 'Month', 'Number of Receipts', 'Actions'];
 
   const invoiceReceipts = allReceipts.map((receipt) => [
     receipt.id,
@@ -180,7 +175,7 @@ function RestaurantInvoice(props) {
   return (
     <div>
       <div>
-        <div className="flex flex-col md:flex-row gap-3 md:items-center mb-3">
+        <div className="flex flex-col md:flex-row gap-3 md:items-center lg:w-[60vw] md:justify-between mb-3">
           <div className="w-1/3 text-lg text-gray-500 font-semibold">
             <span className="text-sm mr-4">Select year: </span>
             <div className="border-[1px] px-4 py-2 w-max">
@@ -196,6 +191,10 @@ function RestaurantInvoice(props) {
           <h2 className="flex items-center select-none text-mainGray text-3xl px-8 py-4 font-semibold border-[1px] border-gray-200 w-max">
             <span className="text-lg mr-4 ">Total invoices: </span>
             {allInvoices.length}
+          </h2>
+          <h2 className="flex items-center text-mainGray text-3xl px-4 py-4 font-semibold border-[1px] border-gray-200 w-max">
+            <span className="text-sm mr-4">Total attendence: </span>
+            7890
           </h2>
         </div>
       </div>
