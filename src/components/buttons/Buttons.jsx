@@ -329,7 +329,7 @@ export function ViewAttendeeButton({ attendeeDetails }) {
     <div>
       {showViewForm && (
         <div className="fixed top-0 left-0 bg-bgBlue z-[40] h-screen w-screen overflow-y-auto overflow-x-auto flex items-center justify-center">
-          <div className="relative bg-white md:w-[50%] lg:w-[50%] md:h-[80vh] h-[85vh] px-[2.5%] py-[2.5%] rounded-md">
+          <div className="relative bg-white w-[84%] sm:w-[75%] md:w-[60%] lg:w-[50%]   h-max px-[2.5%] py-[2.5%] rounded-md">
             <div className="mx-auto flex flex-col h-full gap-4">
               <button
                 className="close border-2 border-mainRed rounded-md px-2 text-mainRed absolute right-4 top-4"
@@ -338,7 +338,7 @@ export function ViewAttendeeButton({ attendeeDetails }) {
                 x
               </button>
 
-              <h1 className="text-gray-500 font-semibold text-md md:text-[1.1rem]">
+              <h1 className=" w-[90%] text-gray-500 font-semibold text-md md:text-[1.1rem]">
                 Employee Details for:{' '}
                 <span className=" text-mainBlue ">{attendeeDetails.name}</span>
               </h1>
@@ -419,8 +419,8 @@ export function ViewAttendeeButton({ attendeeDetails }) {
                 )}
               </Formik>
 
-              <div className="mt-2 flex flex-row w-full gap-3">
-                <div className="w-[65%] h-[17.5rem] border border-3 border-mainBlue rounded-md pt-2 pl-2">
+              <div className="mt-2 flex sm:flex-row flex-col-reverse w-full gap-3">
+                <div className="sm:w-[65%] w-full md  lg:h-[16rem]  md:h-[14rem] border border-3 border-mainBlue rounded-md pt-2 pl-2">
                   <TableComponent
                     title=""
                     headers={attendeeHeaders}
@@ -428,7 +428,7 @@ export function ViewAttendeeButton({ attendeeDetails }) {
                     showCheckBox={false}
                   />
                 </div>
-                <div className="md:w-[34%] w-[25%] md:pl-4 ">
+                <div className="sm:w-[34%] w-full md:pl-4 ">
                   <div className="w-full  flex md:flex-col items-center   text-center  ">
                     <div className="h-[17.5rem] h-full border border-1 border-mainBlue w-full border-gray rounded-md text-sm">
                       <p className="mt-4 flex flex-col items-center">
@@ -518,7 +518,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
                 {src === '' ? (
                   "Don't have Qr code yet"
                 ) : (
-                  <img className="h-[70%] w-[50%] text-mainBlue" src={src} />
+                  <img className="h-[90%] w-[70%] text-mainBlue" src={src} />
                 )}
               </div>
               <div className="my-2 flex w-[80%] md:w-[60%] flex-col md:flex-row items-start md:items-center md:justify-between gap-4 md:gap-8 mx-auto">
@@ -1281,7 +1281,7 @@ export function ViewNotification() {
   return (
     <div>
       {ViewNotification && (
-        <div className="absolute w-[27%] h-[26rem] bg-white z-40 border-2 shadow-md top-[4.5rem] right-10">
+        <div className="absolute lg:w-[27%] md:w-[42%] sm:w-[52%] w-[80%]  h-max bg-white z-40 border-2 shadow-md top-[4.5rem] right-10">
           <div className="p-3">
             <h1 className="font-bold text-mainBlue">Notifications</h1>
           </div>

@@ -320,7 +320,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
       <div className="flex flex-col md:flex-row w-full md:justify-between mb-2 border-b-[1px] border-b-gray-200">
         {addNewAttendee && (
           <div className="fixed top-0 left-0 bg-bgBlue z-[40] h-screen w-screen overflow-y-auto overflow-x-auto flex items-center justify-center">
-            <div className="relative bg-white w-[90%] lg:w-[38%] lg:h-[28.5rem] h-max px-[3.5%] py-[1.7%] rounded-md">
+            <div className="relative bg-white w-[90%] md:w-[50%]  lg:w-[38%] sm:w-[70%] lg:h-[28.5rem] sm:h-[36rem] md:h-[32rem] h-[38rem] px-[3.5%] py-[1.7%] rounded-md">
               <div className="w-[90%] mx-auto flex flex-col gap-[4rem] h-full">
                 <button
                   className="close border-2 border-mainRed rounded-md px-2 text-mainRed absolute right-4 top-4"
@@ -328,7 +328,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                 >
                   x
                 </button>
-                <h1 className="w-[60%] capitalize text-[#078ECE] font-semibold text-xl">
+                <h1 className="w-[70%] sm:h-[2rem] h-max capitalize text-[#078ECE] font-semibold text-xl">
                   Add New attendee
                 </h1>
 
@@ -345,15 +345,15 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     alert(JSON.stringify(values, null, 2));
                   }}
                 >
-                  <Form className="flex flex-col w-full h-[17rem] justify-center gap-[0.4rem]">
-                   <div className=' flex lg:flex-col gap-2'>
+                  <Form className="flex flex-col w-full lg:h-[17rem] h-[26rem] md:h-[20rem] justify-center gap-[0.4rem]  ">
+                   <div className=' flex flex-col gap-2'>
                    <label
                       htmlFor="Email"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Names
                     </label>
-                    <div className='flex flex-row gap-3'>
+                    <div className='flex md:flex-row flex-col gap-3'>
                     <Field
                       name="names"
                       type="text"
@@ -369,7 +369,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     </div>
                     </div> 
                  
-                   <div className='flex lg:flex-col gap-2'>
+                   <div className='flex flex-col gap-2'>
                     <label
                       htmlFor="Email"
                       className="block text-sm font-medium text-gray-700"
@@ -384,8 +384,8 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     />
                     </div>
                     
-                    <div className='flex flex-row gap-3'>
-                      <div className='flex lg:flex-col gap-2 w-[50%]'>
+                    <div className='flex md:flex-row flex-col gap-3'>
+                      <div className='flex flex-col gap-2 md:w-1/2'>
                       <label
                       htmlFor="role"
                       className="block text-sm font-medium text-gray-700"
@@ -406,7 +406,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     </Field>
                       </div>
 
-                     <div className='flex lg:flex-col gap-2 w-[50%]'>
+                     <div className='flex flex-col gap-2 md:w-1/2 w-full'>
                      <label
                       htmlFor="role"
                       className="block text-sm font-medium text-gray-700"
@@ -427,7 +427,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     </Field>
                      </div>
                     </div>
-                    <div className='flex lg:flex-col gap-2'> 
+                    <div className='flex flex-col gap-2'> 
                     <label
                       htmlFor="role"
                       className="block text-sm font-medium text-gray-700"
@@ -570,8 +570,8 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
 
       {/* Attendence */}
       {tab === 'attendence' && (
-        <div className="w-full flex gap-6">
-          <div className="w-4/5 overflow-x-auto h-[70vh] border border-3 border-gray rounded-md pl-4 py-4">
+        <div className="w-full flex md:flex-row flex-col-reverse gap-6">
+          <div className="md:w-4/5 w-full overflow-x-auto h-[70vh] border border-3 border-gray rounded-md pl-4 py-4">
             <TableComponent
               headers={receiptsHeaders}
               data={receiptsToDisplay}
@@ -579,7 +579,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
               showFilter={true}
             />
           </div>
-          <div className="w-1/5 h-max border border-3 border-gray rounded-md py-4 flex flex-col items-center text-gray-600">
+          <div className="md:w-1/5 w-full h-max border border-3 border-gray rounded-md py-4 flex flex-col items-center text-gray-600">
             <h1 className="font-bold text-6xl">46</h1>
             <p className="text-xs mt-4">people attended today</p>
             <p className="mt-6 text-sm flex flex-col text-center">

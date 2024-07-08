@@ -153,12 +153,7 @@ function Restaurants(props) {
 
   const invoiceHeaders = ['Receipt Id', 'Date', 'Number of attendees'];
 
-  const headers = [
-    'Invoice Id',
-    'Month',
-    'Number of Receipts',
-    'Actions',
-  ];
+  const headers = ['Invoice Id', 'Month', 'Number of Receipts', 'Actions'];
 
   const invoiceReceipts = allReceipts.map((receipt) => [
     receipt.id,
