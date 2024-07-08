@@ -490,7 +490,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
     <div>
       {showViewCode && (
         <div className="fixed top-0 left-0 bg-bgBlue z-[40] h-screen w-screen overflow-y-auto overflow-x-auto flex items-center justify-center">
-          <div className="relative bg-white w-[80%] lg:w-[50%] h-[80vh] px-[2.5%] py-[2.5%] rounded-md">
+          <div className="relative bg-white w-[80%] lg:w-[50%] h-max md:h-[80vh] px-[2.5%] py-[2.5%] rounded-md">
             <div className="mx-auto flex flex-col h-full gap-4">
               <button
                 className="close border-2 border-mainRed rounded-md px-2 text-mainRed absolute right-4 top-4"
@@ -513,7 +513,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
               </button>
               <div
                 ref={qrCodeRef}
-                className="w-[80%] md:w-[60%] h-[40vh] border-[1px] border-gray-300 mx-auto flex items-center justify-center"
+                className="w-[80%] md:w-[60%] h-[25vh] md:h-[40vh] border-[1px] border-gray-300 mx-auto flex items-center justify-center"
               >
                 {src === '' ? (
                   "Don't have Qr code yet"
@@ -528,7 +528,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
                 >
                   <FaDownload /> Download
                 </button>
-                <button
+                <div
                   className="text-white flex items-center py-2 px-4 gap-2 border-[1px] border-green-500 bg-green-500 hover:text-green-500 hover:bg-white"
                   onClick={handleShareViaWhatsApp}
                 >
@@ -537,7 +537,7 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
                     <FaWhatsapp />
                     Share via Whatsapp
                   </WhatsappShareButton>
-                </button>
+                </div>
               </div>
             </div>
           </div>
