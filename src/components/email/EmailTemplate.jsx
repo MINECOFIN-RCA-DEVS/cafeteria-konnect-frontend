@@ -9,7 +9,7 @@ function EmailTemplate({ headers, guests }) {
   const [senderName, setSenderName] = useState('Marie Honnette');
   const [senderEmail, setSenderEmail] = useState('honnettemarie12@gmail.com');
   const [receiverName, setReceiverName] = useState('Nshuti Jabes');
-  const [receiverEmail, setReceiverEmail] = useState('nshutij7@gmail.com');
+  const [receiverEmail, setReceiverEmail] = useState('ihozomarie12@gmail.com');
   const [message, setMessage] = useState(
     'Hello, this is the list of new guests'
   );
