@@ -19,8 +19,6 @@ function App() {
 
   const { isAuthenticated } = useAuth();
   const role = sessionStorage.getItem('role');
-  console.log(isAuthenticated)
-  console.log(role)
 
   const hrHeaderTitle = 'HR Dashboard';
   const hrSidebarFields = [

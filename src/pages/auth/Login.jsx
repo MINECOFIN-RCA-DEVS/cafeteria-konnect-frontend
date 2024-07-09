@@ -25,7 +25,7 @@ const Login = () => {
       await login(values.email, values.password, values.rememberMe);
       const role = sessionStorage.getItem('role');
       if(role === 'HR'){
-        navigate('/hr');
+        navigate('/hr/');
       }else if(role === 'RESTAURANT'){
         navigate('/restaurant/');
       }
