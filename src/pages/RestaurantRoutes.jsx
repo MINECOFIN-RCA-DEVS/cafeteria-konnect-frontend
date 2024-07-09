@@ -9,7 +9,7 @@ function RestaurantRoutes({ isAuthenticated }) {
   return (
     <Routes>
       <Route
-        path={'home'}
+        path={'' || 'home'}
         element={
           <ProtectedRoute isAuthenticated={isAuthenticated}>
             <RestaurantHome />

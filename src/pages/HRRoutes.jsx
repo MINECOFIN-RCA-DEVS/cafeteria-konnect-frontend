@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from '../components/protectedRoutes/ProtectedRoutes';
+import ProtectedRoutes from '../components/protectedRoutes/ProtectedRoutes';
 import Statistics from './statistics/Statistics';
 import Guests from './guests/Guests';
 import Attendees from './attendees/Attendees';
@@ -11,33 +11,33 @@ const HRRoutes = ({ isAuthenticated }) => (
     <Route
       path="statistics"
       element={
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes isAuthenticated={isAuthenticated}>
           <Statistics />
-        </ProtectedRoute>
+        </ProtectedRoutes>
       }
     />
     <Route
       path="attendees"
       element={
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes isAuthenticated={isAuthenticated}>
           <Attendees />
-        </ProtectedRoute>
+        </ProtectedRoutes>
       }
     />
     <Route
       path="restaurant"
       element={
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes isAuthenticated={isAuthenticated}>
           <Restaurant />
-        </ProtectedRoute>
+        </ProtectedRoutes>
       }
     />
     <Route
       path="guests"
       element={
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes isAuthenticated={isAuthenticated}>
           <Guests />
-        </ProtectedRoute>
+        </ProtectedRoutes>
       }
     />
   </Routes>

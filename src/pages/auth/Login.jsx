@@ -17,25 +17,23 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { login, error } = useAuth();
 
-  const { login } = useAuth(); // Assuming you have a login function in AuthContext
-
-  const handleSubmit = (values, { setIsSubmitting }) => {
-    if (values.rememberMe) {
-      localStorage.setItem('isAuthenticated', true);
+  const handleSubmit = async (values) => {
+    setIsSubmitting(true);
+    try {
+      await login(values.email, values.password, values.rememberMe);
+      const role = sessionStorage.getItem('role');
+      if(role === 'HR'){
+        navigate('/hr');
+      }else if(role === 'RESTAURANT'){
+        navigate('/restaurant/');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    } finally {
+      setIsSubmitting(false);
     }
-    // Perform login logic here
-    login(values.email, values.password)
-      .then(() => {
-        navigate('/restaurant/invoice'); // Navigate to the desired page after login
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle login error here
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
   };
 
   return (
@@ -94,6 +92,9 @@ const Login = () => {
                 />
                 <label htmlFor="rememberMe">Remember Me</label>
               </div>
+              {error && (
+                <div className="text-red-500 text-sm mt-2">{error}</div>
+              )}
               <button
                 type="submit"
                 className={`w-full px-2 text-sm py-3 m-3 font-semibold ${
@@ -102,7 +103,6 @@ const Login = () => {
                     : 'bg-[#078ECE] text-white'
                 } transition-all duration-300 ease-in-out`}
                 disabled={isSubmitting}
-                onClick={() => setIsSubmitting(true)}
               >
                 {isSubmitting ? 'Submitting' : 'Submit'}
               </button>
@@ -110,7 +110,12 @@ const Login = () => {
           )}
         </Formik>
         <div className="w-[90%] md:w-[70%]">
-          <p className="text-sm text-[#8F8F8F]">Forgot your password?</p>
+          <p className="text-sm text-[#8F8F8F]">
+            Forgot your password?
+            <span className="text-blue-500 cursor-pointer font-semibold ml-4">
+              Reset
+            </span>
+          </p>
         </div>
       </div>
 

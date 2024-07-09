@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -6,20 +5,22 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 import HRRoutes from './pages/HRRoutes';
+import Login from './pages/auth/Login';
 import RestaurantRoutes from './pages/RestaurantRoutes';
 import { FaChartBar, FaFileInvoice } from 'react-icons/fa';
 import { FaFileInvoiceDollar, FaPeopleGroup } from 'react-icons/fa6';
 import { BsPeopleFill } from 'react-icons/bs';
 import { IoReceipt } from 'react-icons/io5';
-import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
-import Login from './pages/auth/Login';
 
 function App() {
-  const isAuthenticated = true;
-  const role = 'hr'; // Change this to 'restaurant' for restaurant role
+
+  const { isAuthenticated } = useAuth();
+  const role = sessionStorage.getItem('role');
+  console.log(isAuthenticated)
+  console.log(role)
 
   const hrHeaderTitle = 'HR Dashboard';
   const hrSidebarFields = [
@@ -74,47 +75,78 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        {/* Redirect to appropriate dashboard if authenticated */}
         <Routes>
-          {/* Unauthenticated Routes */}
-          <Route path="/login" element={<Login />} />
-
-          {/* Authenticated Routes */}
           <Route
-            path="/hr/*"
+            path="/login"
             element={
-              <ProtectedRoutes isAuthenticated={isAuthenticated} role={role}>
-                <Layout
-                  sidebarFields={hrSidebarFields}
-                  headerTitle={hrHeaderTitle}
-                >
-                  <HRRoutes isAuthenticated={isAuthenticated} />
-                </Layout>
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="/restaurant/*"
-            element={
-              <ProtectedRoutes isAuthenticated={isAuthenticated} role={role}>
-                <Layout
-                  sidebarFields={restaurantSidebarFields}
-                  headerTitle={restaurantHeaderTitle}
-                >
-                  <RestaurantRoutes isAuthenticated={isAuthenticated} />
-                </Layout>
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoutes isAuthenticated={isAuthenticated} role={role}>
+              isAuthenticated ? (
                 <Navigate
-                  to={role === 'hr' ? '/hr/statistics' : '/restaurant/home'}
+                  to={role === 'HR' ? '/hr/statistics' : '/restaurant/home'}
                 />
-              </ProtectedRoutes>
+              ) : (
+                <Login />
+              )
             }
           />
+          {role === 'HR' && (
+            <>
+              <Route
+                path="/hr/*"
+                element={
+                  isAuthenticated ? (
+                    <Layout
+                      sidebarFields={hrSidebarFields}
+                      headerTitle={hrHeaderTitle}
+                    >
+                      <HRRoutes isAuthenticated={isAuthenticated} />
+                    </Layout>
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  isAuthenticated ? (
+                    <Navigate to="/hr/statistics" />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+            </>
+          )}
+          {role === 'RESTAURANT' && (
+            <>
+              <Route
+                path="/restaurant/*"
+                element={
+                  isAuthenticated ? (
+                    <Layout
+                      sidebarFields={restaurantSidebarFields}
+                      headerTitle={restaurantHeaderTitle}
+                    >
+                      <RestaurantRoutes isAuthenticated={isAuthenticated} />
+                    </Layout>
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  isAuthenticated ? (
+                    <Navigate to="/restaurant/home" />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+            </>
+          )}
         </Routes>
       </AuthProvider>
     </Router>
