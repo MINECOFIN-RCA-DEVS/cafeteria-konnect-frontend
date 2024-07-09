@@ -465,8 +465,19 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
   const [src, setSrc] = useState('');
   const qrCodeRef = useRef(null);
 
+  const generateUniqueIdentifier = () => {
+    return `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
+  };
+  
   const handleGenerateCode = () => {
-    QRCode.toDataURL(`${attendeeDetails.id}`).then((value) => setSrc(value));
+    const uniqueIdentifier = generateUniqueIdentifier();
+    const qrCodeData = JSON.stringify({
+      id: attendeeDetails.id,
+      email: attendeeDetails.email,
+      uniqueIdentifier,
+    });
+  
+    QRCode.toDataURL(qrCodeData).then((value) => setSrc(value));
   };
 
   const handleDownload = () => {

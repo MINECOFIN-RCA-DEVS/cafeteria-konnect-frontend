@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './../components/protectedRoutes/ProtectedRoutes';
+import ProtectedRoute from '../components/protectedRoutes/ProtectedRoutes';
 import Statistics from './statistics/Statistics';
 import Guests from './guests/Guests';
-import Attendees from './attendees/Attendees'; 
-import Restaurant from './restaurant/Restaurant'; 
+import Attendees from './attendees/Attendees';
+import Restaurant from './restaurant/Restaurant';
 
 const HRRoutes = ({ isAuthenticated }) => (
   <Routes>
