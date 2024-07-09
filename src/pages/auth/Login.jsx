@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { API_BASE_URL } from '../../utils/api';
 import { useAuth } from '../../context/AuthContext';
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -17,20 +20,27 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { login, error } = useAuth();
+  const [error, setError] = useState(null);
+  const {login} = useAuth();
+
 
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
+    const { email, password } = values;
     try {
-      await login(values.email, values.password, values.rememberMe);
-      const role = sessionStorage.getItem('role');
-      if(role === 'HR'){
-        navigate('/hr/');
-      }else if(role === 'RESTAURANT'){
-        navigate('/restaurant/');
-      }
+      const response = await axios.post(API_BASE_URL + '/users/login', {
+        email,
+        password,
+      });
+
+      const token = response.data.data.access_token;
+      login(token);
+
+      setError(null);
+      navigate('/');
     } catch (error) {
       console.error('Login failed:', error);
+      setError(error.response.data.message);
     } finally {
       setIsSubmitting(false);
     }

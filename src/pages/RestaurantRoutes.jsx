@@ -1,37 +1,43 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import RestaurantHome from './restaurantHome/RestaurantHome';
-import ProtectedRoute from '../components/protectedRoutes/ProtectedRoutes';
+import ProtectedRoutes from '../components/protectedRoutes/ProtectedRoutes';
 import RestaurantReceipts from './restaurantReceipts/RestaurantReceipts';
 import RestaurantInvoice from './restaurantInvoice/RestaurantInvoice';
 
-function RestaurantRoutes({ isAuthenticated }) {
+function RestaurantRoutes() {
   return (
     <Routes>
       <Route
-        path={'' || 'home'}
+        path='home'
         element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <ProtectedRoutes>
             <RestaurantHome />
-          </ProtectedRoute>
+          </ProtectedRoutes>
         }
       />
       <Route
         path="receipts"
         element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <ProtectedRoutes>
             <RestaurantReceipts />
-          </ProtectedRoute>
+          </ProtectedRoutes>
         }
       />
       <Route
         path="invoice"
         element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <ProtectedRoutes>
             <RestaurantInvoice />
-          </ProtectedRoute>
+          </ProtectedRoutes>
         }
       />
+      <Route
+      path="*"
+      element={
+        <Navigate to="home" />
+      }
+    />
     </Routes>
   );
 }

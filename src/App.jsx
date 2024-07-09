@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 import HRRoutes from './pages/HRRoutes';
 import Login from './pages/auth/Login';
@@ -14,12 +14,10 @@ import { FaChartBar, FaFileInvoice } from 'react-icons/fa';
 import { FaFileInvoiceDollar, FaPeopleGroup } from 'react-icons/fa6';
 import { BsPeopleFill } from 'react-icons/bs';
 import { IoReceipt } from 'react-icons/io5';
+import PublicRoutes from './components/publicRoutes/PublicRoutes';
+import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 
 function App() {
-
-  const { isAuthenticated } = useAuth();
-  const role = sessionStorage.getItem('role');
-
   const hrHeaderTitle = 'HR Dashboard';
   const hrSidebarFields = [
     {
@@ -73,78 +71,41 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        {/* Redirect to appropriate dashboard if authenticated */}
         <Routes>
           <Route
             path="/login"
             element={
-              isAuthenticated ? (
-                <Navigate
-                  to={role === 'HR' ? '/hr/statistics' : '/restaurant/home'}
-                />
-              ) : (
+              <PublicRoutes>
                 <Login />
-              )
+              </PublicRoutes>
             }
           />
-          {role === 'HR' && (
-            <>
-              <Route
-                path="/hr/*"
-                element={
-                  isAuthenticated ? (
-                    <Layout
-                      sidebarFields={hrSidebarFields}
-                      headerTitle={hrHeaderTitle}
-                    >
-                      <HRRoutes isAuthenticated={isAuthenticated} />
-                    </Layout>
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  isAuthenticated ? (
-                    <Navigate to="/hr/statistics" />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-            </>
-          )}
-          {role === 'RESTAURANT' && (
-            <>
-              <Route
-                path="/restaurant/*"
-                element={
-                  isAuthenticated ? (
-                    <Layout
-                      sidebarFields={restaurantSidebarFields}
-                      headerTitle={restaurantHeaderTitle}
-                    >
-                      <RestaurantRoutes isAuthenticated={isAuthenticated} />
-                    </Layout>
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  isAuthenticated ? (
-                    <Navigate to="/restaurant/home" />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-            </>
-          )}
+          <Route
+            path="/hr/*"
+            element={
+              <ProtectedRoutes>
+                <Layout sidebarFields={hrSidebarFields} headerTitle={hrHeaderTitle}>
+                  <HRRoutes />
+                </Layout>
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/restaurant/*"
+            element={
+              <ProtectedRoutes>
+                <Layout sidebarFields={restaurantSidebarFields} headerTitle={restaurantHeaderTitle}>
+                  <RestaurantRoutes />
+                </Layout>
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Navigate to="/login" />
+            }
+          />
         </Routes>
       </AuthProvider>
     </Router>

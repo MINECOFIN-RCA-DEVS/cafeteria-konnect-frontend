@@ -1,17 +1,17 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoutes from '../components/protectedRoutes/ProtectedRoutes';
 import Statistics from './statistics/Statistics';
 import Guests from './guests/Guests';
 import Attendees from './attendees/Attendees';
 import Restaurant from './restaurant/Restaurant';
 
-const HRRoutes = ({ isAuthenticated }) => (
+const HRRoutes = () => (
   <Routes>
     <Route
       path="statistics"
       element={
-        <ProtectedRoutes isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes>
           <Statistics />
         </ProtectedRoutes>
       }
@@ -19,7 +19,7 @@ const HRRoutes = ({ isAuthenticated }) => (
     <Route
       path="attendees"
       element={
-        <ProtectedRoutes isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes>
           <Attendees />
         </ProtectedRoutes>
       }
@@ -27,7 +27,7 @@ const HRRoutes = ({ isAuthenticated }) => (
     <Route
       path="restaurant"
       element={
-        <ProtectedRoutes isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes>
           <Restaurant />
         </ProtectedRoutes>
       }
@@ -35,9 +35,15 @@ const HRRoutes = ({ isAuthenticated }) => (
     <Route
       path="guests"
       element={
-        <ProtectedRoutes isAuthenticated={isAuthenticated}>
+        <ProtectedRoutes>
           <Guests />
         </ProtectedRoutes>
+      }
+    />
+    <Route
+      path="*"
+      element={
+        <Navigate to="statistics" />
       }
     />
   </Routes>

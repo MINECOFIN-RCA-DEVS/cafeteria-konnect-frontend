@@ -3,10 +3,14 @@ import { React, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiCloseLargeLine } from 'react-icons/ri';
 import { IoIosLogOut } from 'react-icons/io';
+import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = ({ isOpen, toggleSidebar, sidebarFields }) => {
   const [activeItem, setActiveItem] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
 
   useEffect(() => {
     // Find the default active item based on current location
@@ -18,12 +22,16 @@ const Sidebar = ({ isOpen, toggleSidebar, sidebarFields }) => {
     }
   }, [location.pathname, sidebarFields]);
 
-  const handleLogout = () => {
-    const navigate = useNavigate();
-    localStorage.setItem('isAuthenticated', true);
-
-    // Implement your logout logic here
-    console.log('Logging out ...');
+  const handleLogout = async () => {
+    setIsSubmitting(true);
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Function to handle click on sidebar item
@@ -69,9 +77,10 @@ const Sidebar = ({ isOpen, toggleSidebar, sidebarFields }) => {
       <div className="absolute bottom-4 left-4 right-4">
         <button
           className="flex items-center justify-center gap-2 w-full py-2 px-4 hover:bg-white border border-2 font-semibold hover:text-[#4069B0] rounded-md shadow-md bg-[#4069B0] text-white"
-          onClick={() => handleLogout}
+          onClick={handleLogout}
+          disabled={isSubmitting}
         >
-          Logout
+          {isSubmitting ? 'Logging out' : 'Logout'}
           <IoIosLogOut />
         </button>
       </div>
