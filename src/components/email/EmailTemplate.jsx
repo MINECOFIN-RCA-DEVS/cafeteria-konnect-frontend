@@ -98,7 +98,6 @@ function EmailTemplate({ headers, guests }) {
               type="text"
               name="sender_name"
               value={senderName}
-              defaultValue="Marie Honnette"
               onChange={(e) => setSenderName(e.target.value)}
             />
           </div>
@@ -111,7 +110,6 @@ function EmailTemplate({ headers, guests }) {
               className="border-[1px] border-gray-300 outline-none py-2 px-4"
               name="sender_email"
               value={senderEmail}
-              defaultValue="mariehonette12@gmail.com"
               onChange={(e) => setSenderEmail(e.target.value)}
             />
           </div>
@@ -126,7 +124,6 @@ function EmailTemplate({ headers, guests }) {
               className="border-[1px] border-gray-300 outline-none py-2 px-4"
               type="text"
               name="receiver_name"
-              defaultValue="Nshuti Jabes"
               value={receiverName}
               onChange={(e) => setReceiverName(e.target.value)}
             />
@@ -140,7 +137,6 @@ function EmailTemplate({ headers, guests }) {
               className="border-[1px] border-gray-300 outline-none py-2 px-4"
               name="receiver_email"
               value={receiverEmail}
-              defaultValue="nshutij7@gmail.com"
               onChange={(e) => setReceiverEmail(e.target.value)}
             />
           </div>
