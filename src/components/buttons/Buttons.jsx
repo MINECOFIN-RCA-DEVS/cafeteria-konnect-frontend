@@ -18,6 +18,7 @@ import * as Yup from 'yup';
 import { BsQrCode } from 'react-icons/bs';
 import QRCode from 'qrcode';
 import { WhatsappShareButton } from 'react-share';
+import { useAuth } from '../../context/AuthContext';
 
 export function MainButton({ text }) {
   return (
@@ -464,20 +465,29 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
   const [showViewCode, setShowViewCode] = useState(false);
   const [src, setSrc] = useState('');
   const qrCodeRef = useRef(null);
+  const { encryptData, decryptData, secretKey } = useAuth();
 
   const generateUniqueIdentifier = () => {
     return `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
   };
-  
+
   const handleGenerateCode = () => {
     const uniqueIdentifier = generateUniqueIdentifier();
+
     const qrCodeData = JSON.stringify({
       id: attendeeDetails.id,
       email: attendeeDetails.email,
       uniqueIdentifier,
     });
-  
-    QRCode.toDataURL(qrCodeData).then((value) => setSrc(value));
+
+    console.log(qrCodeData);
+    console.log('secret key: ', secretKey);
+    const encryptedData = encryptData(qrCodeData, secretKey);
+    console.log(encryptedData);
+    const decryptedData = decryptData(encryptedData, secretKey);
+    console.log(decryptedData);
+
+    QRCode.toDataURL(encryptedData).then((value) => setSrc(value));
   };
 
   const handleDownload = () => {
