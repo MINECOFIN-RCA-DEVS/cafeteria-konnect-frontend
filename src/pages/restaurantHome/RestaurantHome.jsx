@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { toast, Bounce } from 'react-toastify';
 import Toast from './../../components/toast/Toast';
 import { MdDangerous } from 'react-icons/md';
+import { useAuth } from '../../context/AuthContext';
 
 
 const StatsCard = ({ title, text, style }) => (
@@ -86,6 +87,7 @@ function RestaurantHome(props) {
   const [scannedList, setScannedList] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const {decryptData,secretKey} = useAuth();
 
   // Function to get today's date in YYYY-MM-DD format
   const getFormattedDate = (date) => {
@@ -137,9 +139,12 @@ function RestaurantHome(props) {
       );
     };
 
-    if (typeof value === 'string' && value.trim().endsWith('}')) {
+    const decryptedData = decryptData(value, secretKey);
+    console.log('decryptedData: ',decryptedData);
+
+    if (typeof decryptedData === 'string' && decryptedData.trim().endsWith('}')) {
       try {
-        const scannedObject = JSON.parse(value);
+        const scannedObject = JSON.parse(decryptedData);
 
         if (isValidScanObject(scannedObject)) {
           setScannedList((prevList) => [

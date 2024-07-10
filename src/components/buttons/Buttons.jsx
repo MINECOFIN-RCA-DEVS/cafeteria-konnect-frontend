@@ -479,13 +479,8 @@ export function AttendeeQrCodeButton({ attendeeDetails }) {
       email: attendeeDetails.email,
       uniqueIdentifier,
     });
-
-    console.log(qrCodeData);
-    console.log('secret key: ', secretKey);
     const encryptedData = encryptData(qrCodeData, secretKey);
-    console.log(encryptedData);
-    const decryptedData = decryptData(encryptedData, secretKey);
-    console.log(decryptedData);
+    
 
     QRCode.toDataURL(encryptedData).then((value) => setSrc(value));
   };
