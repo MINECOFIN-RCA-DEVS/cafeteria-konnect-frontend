@@ -8,12 +8,14 @@ export const AuthProvider = ({ children }) => {
     return sessionStorage.getItem('isAuthenticated') === 'true';
   });
   const [role, setRole] = useState(() => sessionStorage.getItem('role') || '');
+  const [token, setToken] = useState(()=> sessionStorage.getItem('token') || '')
 
   const login = (token) => {
     const decodedToken = jwtDecode(token);
     sessionStorage.setItem('userId', decodedToken.id);
     sessionStorage.setItem('role', decodedToken.role);
     sessionStorage.setItem('isAuthenticated', true);
+    sessionStorage.setItem('token', token)
     setRole(decodedToken.role);
     setIsAuthenticated(true);
   };
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('isAuthenticated');
+    sessionStorage.removeItem('token');
 
     setIsAuthenticated(false);
   };
@@ -33,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   }, [sessionStorage]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, role, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, role, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

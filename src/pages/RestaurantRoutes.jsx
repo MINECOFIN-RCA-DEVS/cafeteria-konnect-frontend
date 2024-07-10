@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import RestaurantHome from './restaurantHome/RestaurantHome';
 import ProtectedRoutes from '../components/protectedRoutes/ProtectedRoutes';
 import RestaurantReceipts from './restaurantReceipts/RestaurantReceipts';
@@ -9,7 +9,7 @@ function RestaurantRoutes() {
   return (
     <Routes>
       <Route
-        path='home'
+        path="home"
         element={
           <ProtectedRoutes>
             <RestaurantHome />
@@ -32,12 +32,7 @@ function RestaurantRoutes() {
           </ProtectedRoutes>
         }
       />
-      <Route
-      path="*"
-      element={
-        <Navigate to="home" />
-      }
-    />
+      <Route path="*" element={<Navigate to="home" />} />
     </Routes>
   );
 }

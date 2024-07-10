@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TableComponent from '../../components/table/TableComponent';
 import {
   AttendeeButtons,
@@ -10,6 +10,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Status } from '../../components/buttons/Buttons';
 import * as Yup from 'yup';
 import { CgDanger } from 'react-icons/cg';
+import { API_BASE_URL } from './../../utils/api';
+import { useAuth } from '../../context/AuthContext';
+import axios from 'axios';
 
 const validationSchema = Yup.object().shape({
   names: Yup.string()
@@ -21,15 +24,64 @@ const validationSchema = Yup.object().shape({
 });
 
 function Attendees() {
+  const [addNewAttendee, setaddNewAttendee] = useState(false);
+  const headers = ['Id', 'Name', 'Role', 'Status', 'Actions'];
+  const [tab, setTab] = useState('active attendees');
+  const [extraPeople, setExtraPeople] = useState(7);
+  const [departments, setDepartments] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const { token } = useAuth();
+
   const options = [
     { role: 'Intern', label: 'Intern' },
     { role: 'Consultant', label: 'consultant' },
   ];
 
-  const [addNewAttendee, setaddNewAttendee] = useState(false);
-  const headers = ['Id', 'Name', 'Role', 'Status', 'Actions'];
-  const [tab, setTab] = useState('active attendees');
-  const [extraPeople, setExtraPeople] = useState(7);
+  //fetching all departments
+  const getAllDepartments = async () => {
+    try {
+      const response = await axios.get(API_BASE_URL + '/departments/all', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      const allDepartments = response.data.data.map((dept) => ({
+        id: dept.id,
+        department: dept.department,
+      }));
+      setDepartments(allDepartments);
+    } catch (error) {
+      console.log(
+        'Failed to fetch departments',
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
+  //fetching all roles
+  const getAllRoles = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/roles/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      const allRoles = response.data.data.map((role) => ({
+        id: role.id,
+        role: role.role,
+      }));
+      setRoles(allRoles);
+    } catch (error) {
+      console.log(
+        'Failed to fetch roles',
+        error.response?.data?.message || error.message
+      );
+    }
+  };
 
   const allAttendees = [
     {
@@ -200,102 +252,98 @@ function Attendees() {
       attendees: '30',
     },
   ];
-  
 
-  const receiptsHeaders = [
-    'Receipt Id',
-    'Date',
-    'Clients',
-    'Actions',
+  const receiptsHeaders = ['Receipt Id', 'Date', 'Clients', 'Actions'];
+
+  //receiptAttendees data
+  const attendanceData = [
+    {
+      id: 1,
+      name: 'Nshuti Ruranga Jabes',
+      role: 'intern',
+      department: 'FMIS',
+      Scanned: 'Yes',
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      role: 'Consultant',
+      department: 'Budget',
+      Scanned: 'No',
+    },
+    {
+      id: 3,
+      name: 'Sam Johnson',
+      role: 'intern',
+      department: 'Human Resource',
+      Scanned: 'Yes',
+    },
+    {
+      id: 4,
+      name: 'Nshuti Ruranga Jabes',
+      role: 'intern',
+      department: 'FMIS',
+      Scanned: 'Yes',
+    },
+    {
+      id: 5,
+      name: 'Jane Smith',
+      role: 'Consultant',
+      department: 'Budget',
+      Scanned: 'Yes',
+    },
+    {
+      id: 6,
+      name: 'Sam Johnson',
+      role: 'intern',
+      department: 'Human Resource',
+      Scanned: 'Yes',
+    },
+    {
+      id: 7,
+      name: 'Nshuti Ruranga Jabes',
+      role: 'intern',
+      department: 'FMIS',
+      Scanned: 'No',
+    },
+    {
+      id: 8,
+      name: 'Jane Smith',
+      role: 'Consultant',
+      department: 'Budget',
+      Scanned: 'yes',
+    },
+    {
+      id: 9,
+      name: 'Sam Johnson',
+      role: 'intern',
+      department: 'Human Resource',
+      Scanned: 'active',
+    },
   ];
 
-//receiptAttendees data
-const attendanceData = [
-  {
-    id: 1,
-    name: 'Nshuti Ruranga Jabes',
-    role: 'intern',
-    department: 'FMIS',
-    Scanned: 'Yes',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    role: 'Consultant',
-    department: 'Budget',
-    Scanned: 'No',
-  },
-  {
-    id: 3,
-    name: 'Sam Johnson',
-    role: 'intern',
-    department: 'Human Resource',
-    Scanned: 'Yes',
-  },
-  {
-    id: 4,
-    name: 'Nshuti Ruranga Jabes',
-    role: 'intern',
-    department: 'FMIS',
-    Scanned: 'Yes',
-  },
-  {
-    id: 5,
-    name: 'Jane Smith',
-    role: 'Consultant',
-    department: 'Budget',
-    Scanned: 'Yes',
-  },
-  {
-    id: 6,
-    name: 'Sam Johnson',
-    role: 'intern',
-    department: 'Human Resource',
-    Scanned: 'Yes',
-  },
-  {
-    id: 7,
-    name: 'Nshuti Ruranga Jabes',
-    role: 'intern',
-    department: 'FMIS',
-    Scanned: 'No',
-  },
-  {
-    id: 8,
-    name: 'Jane Smith',
-    role: 'Consultant',
-    department: 'Budget',
-    Scanned: 'yes',
-  },
-  {
-    id: 9,
-    name: 'Sam Johnson',
-    role: 'intern',
-    department: 'Human Resource',
-    Scanned: 'active',
-  },
-];
+  const receiptAttendees = attendanceData.map((attendee) => [
+    attendee.id,
+    attendee.name,
+    attendee.department,
+    attendee.Scanned,
+  ]);
 
-const receiptAttendees = attendanceData.map((attendee)=>[
-  attendee.id,
-  attendee.name,
-  attendee.department,
-  attendee.Scanned
-])
-
-const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
-
-
-
+  const receiptAttendeesHeaders = ['id', 'Names', 'Department', 'Scanned'];
 
   const receiptsToDisplay = allReceipts.map((receipt) => [
     receipt.id,
     receipt.date,
     receipt.attendees,
-    <ReceiptsButtons receipt={receipt} receiptDate={receipt.date} receiptAttendeesHeaders={receiptAttendeesHeaders} receiptData={receiptAttendees} />
+    <ReceiptsButtons
+      receipt={receipt}
+      receiptDate={receipt.date}
+      receiptAttendeesHeaders={receiptAttendeesHeaders}
+      receiptData={receiptAttendees}
+    />,
   ]);
 
-//attendance report data to be displayed
+  //attendance report data to be displayed
   const handleExpectedAttendees = (e) => {
     e.preventDefault();
     if (isNaN(extraPeople)) {
@@ -320,6 +368,11 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
     setExtraPeople(parseInt(parsedValue, 10));
   };
 
+  useEffect(() => {
+    getAllDepartments();
+    getAllRoles();
+  }, []);
+
   return (
     <div>
       {/* tabs component */}
@@ -343,7 +396,7 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                     names: '',
                     email: '',
                     role: '',
-                    NID:'',
+                    NID: '',
                     department: '',
                   }}
                   validationSchema={validationSchema}
@@ -352,101 +405,104 @@ const receiptAttendeesHeaders = ['id','Names','Department','Scanned']
                   }}
                 >
                   <Form className="flex flex-col w-full lg:h-[17rem] h-[26rem] md:h-[20rem] justify-center gap-[0.4rem]  ">
-                   <div className=' flex flex-col gap-2'>
-                   <label
-                      htmlFor="Email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Names
-                    </label>
-                    <div className='flex md:flex-row flex-col gap-3'>
-                    <input
-                      name="names"
-                      type="text"
-                      placeholder="First name"
-                      className="w-full text-xs border focus:border-gray-300 focus:outline-none  px-2 py-3 "
-                      
-                    />
-                    <Field
-                      name="names"
-                      type="text"
-                      placeholder="Last name"
-                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
-                    />
-                    </div>
-                    </div> 
-                 
-                   <div className='flex flex-col gap-2'>
-                    <label
-                      htmlFor="Email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Email
-                    </label>
-                    <Field
-                      name="email"
-                      type="email"
-                      placeholder="Email address"
-                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
-                    />
-                    </div>
-                    
-                    <div className='flex md:flex-row flex-col gap-3'>
-                      <div className='flex flex-col gap-2 md:w-1/2'>
+                    <div className=" flex flex-col gap-2">
                       <label
-                      htmlFor="role"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Department
-                    </label>
+                        htmlFor="Email"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Names
+                      </label>
+                      <div className="flex md:flex-row flex-col gap-3">
+                        <input
+                          name="names"
+                          type="text"
+                          placeholder="First name"
+                          className="w-full text-xs border focus:border-gray-300 focus:outline-none  px-2 py-3 "
+                        />
+                        <Field
+                          name="names"
+                          type="text"
+                          placeholder="Last name"
+                          className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label
+                        htmlFor="Email"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Email
+                      </label>
                       <Field
-                      as="select"
-                      id="role"
-                      name="role"
-                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border border focus:border-gray-300 focus:outline-none rounded shadow-sm  "
-                    >
-                      {options.map((option) => (
-                        <option key={option.role} value={option.role}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </Field>
+                        name="email"
+                        type="email"
+                        placeholder="Email address"
+                        className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
+                      />
+                    </div>
+
+                    <div className="flex md:flex-row flex-col gap-3">
+                      <div className="flex flex-col gap-2 md:w-1/2">
+                        <label
+                          htmlFor="department"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Department
+                        </label>
+                        <Field
+                          as="select"
+                          id="department"
+                          name="department"
+                          className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border  focus:border-gray-300 focus:outline-none rounded shadow-sm overflow-x-none"
+                        >
+                          {departments.map((dept) => (
+                            <option
+                              key={dept.id}
+                              value={dept.department}
+                              className="w-full"
+                            >
+                              {dept.department}
+                            </option>
+                          ))}
+                        </Field>
                       </div>
 
-                     <div className='flex flex-col gap-2 md:w-1/2 w-full'>
-                     <label
-                      htmlFor="role"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Role
-                    </label>
-                     <Field
-                      as="select"
-                      id="role"
-                      name="role"
-                      className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border rounded shadow-sm focus:outline-none"
-                    >
-                      {options.map((option) => (
-                        <option key={option.role} value={option.role}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </Field>
-                     </div>
+                      <div className="flex flex-col gap-2 md:w-1/2 w-full">
+                        <label
+                          htmlFor="role"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Role
+                        </label>
+                        <Field
+                          as="select"
+                          id="role"
+                          name="role"
+                          className="block w-full px-3 py-2 mb-3 text-gray-500 text-xs border rounded shadow-sm focus:outline-none"
+                        >
+                          {roles.map((role) => (
+                            <option key={role.id} value={role.role}>
+                              {role.role}
+                            </option>
+                          ))}
+                        </Field>
+                      </div>
                     </div>
-                    <div className='flex flex-col gap-2'> 
-                    <label
-                      htmlFor="role"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      National Id
-                    </label>
-                    <Field
-                      name="email"
-                      type="email"
-                      placeholder="Enter your National Id"
-                      className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
-                    />
+                    <div className="flex flex-col gap-2">
+                      <label
+                        htmlFor="role"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        National Id
+                      </label>
+                      <Field
+                        name="NID"
+                        type="text"
+                        placeholder="Enter your National Id"
+                        className="w-full text-xs border focus:border-gray-300 focus:outline-none px-2 py-3 "
+                      />
                     </div>
 
                     <button
